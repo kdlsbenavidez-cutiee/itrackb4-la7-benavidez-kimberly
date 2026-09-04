@@ -35,3 +35,7 @@ Named routes make it easier to create links because we can use the
 route name instead of typing the URL directly. If the URL is changed
 later, hard-coded links can stop working. Using named routes makes
 the links easier to manage.
+
+## Author
+
+Kimberly Benavidez
