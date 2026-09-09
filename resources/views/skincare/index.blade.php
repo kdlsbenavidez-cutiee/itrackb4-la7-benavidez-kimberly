@@ -1,52 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Skincare Products</title>
-</head>
-<body>
-
-    <h1>My Skincare Products</h1>
-
-    <p>Created by: Kimberly Benavidez</p>
+@extends('layouts.app')
+@section('title', 'Skincare Products')
+@section('content')
 
     <p>
-        <a href="{{ route('skincare.featured') }}">
-            View Featured Product
-        </a>
+        <a href="{{route('skincare.featured')}}">View Featured Product</a>
+        |
+        <a href="{{route('skincare.filter')}}">View All Products</a>
     </p>
 
-    <p>
-        <a href="{{ route('skincare.filter') }}">
-            View All Products
-        </a>
-    </p>
-
-    <table border="1" cellpadding="10">
+    <table class="table table-striped table-bordered"
         <tr>
-            <th>ID</th>
-            <th>Product</th>
+            <th>#</th>
+            <th>Products</th>
             <th>Brand</th>
             <th>Category</th>
             <th>Price</th>
         </tr>
 
-        @foreach ($skincare as $item)
-            <tr>
-                <td>{{ $item['id'] }}</td>
-
+        @forelse ($skincare as $item)
+            <tr class="@if($item['price'] >= 400) table-warning @endif">
+                <td>{{ $loop->iteration }}</td>
                 <td>
                     <a href="{{ route('skincare.show', $item['id']) }}">
                         {{ $item['product'] }}
                     </a>
                 </td>
-
                 <td>{{ $item['brand'] }}</td>
                 <td>{{ $item['category'] }}</td>
                 <td>₱{{ $item['price'] }}</td>
             </tr>
-        @endforeach
-
+        @empty
+            <tr>
+                <td colspan="5">As of now , there is no record!.</td>
+            </tr>
+        @endforelse
     </table>
 
-</body>
-</html>
+@endsection

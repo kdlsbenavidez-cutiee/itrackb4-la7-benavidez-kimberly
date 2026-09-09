@@ -1,54 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Skincare Filter</title>
-</head>
-<body>
-
-    <h1>Skincare Products</h1>
+@extends('layouts.app')
+@section('title', 'Filter: ' . $activeFilter)
+@section('content')
 
     <h2>Active Filter: {{ $activeFilter }}</h2>
 
-    @if (count($skincare) > 0)
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>ID</th>
+            <th>Product</th>
+            <th>Brand</th>
+            <th>Category</th>
+            <th>Price</th>
+        </tr>
 
-        <table border="1" cellpadding="10">
+        @forelse ($skincare as $item)
             <tr>
-                <th>ID</th>
-                <th>Product</th>
-                <th>Brand</th>
-                <th>Category</th>
-                <th>Price</th>
+                <td>{{ $item['id'] }}</td>
+                <td>
+                    <a href="{{ route('skincare.show', $item['id']) }}">
+                        {{ $item['product'] }}
+                    </a>
+                </td>
+                <td>{{ $item['brand'] }}</td>
+                <td>{{ $item['category'] }}</td>
+                <td>₱{{ $item['price'] }}</td>
             </tr>
-
-            @foreach ($skincare as $item)
-                <tr>
-                    <td>{{ $item['id'] }}</td>
-
-                    <td>
-                        <a href="{{ route('skincare.show', $item['id']) }}">
-                            {{ $item['product'] }}
-                        </a>
-                    </td>
-
-                    <td>{{ $item['brand'] }}</td>
-                    <td>{{ $item['category'] }}</td>
-                    <td>₱{{ $item['price'] }}</td>
-                </tr>
-            @endforeach
-
-        </table>
-
-    @else
-
-        <p>No skincare products found for this filter.</p>
-
-    @endif
+        @empty
+            <tr>
+                <td colspan="5">No skincare products found for this filter.</td>
+            </tr>
+        @endforelse
+    </table>
 
     <br>
+    <a href="{{ route('skincare.index') }}">Back to Skincare List</a>
 
-    <a href="{{ route('skincare.index') }}">
-        Back to Skincare List
-    </a>
-
-</body>
-</html>
+@endsection

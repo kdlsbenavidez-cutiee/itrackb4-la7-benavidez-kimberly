@@ -1,21 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Skincare Product Details</title>
-</head>
-<body>
+@extends('layouts.app')
+@section('title', $item['product'])
+@section('content')
 
-    <h1>{{ $item['product'] }}</h1>
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">{{ $item['product'] }}</h2>
+            <p><strong>ID:</strong> {{ $item['id'] }}</p>
+            <p><strong>Brand:</strong> {{ $item['brand'] }}</p>
+            <p><strong>Category:</strong> {{ $item['category'] }}</p>
+            <p><strong>Price:</strong> ₱{{ $item['price'] }}</p>
 
-    <p><strong>ID:</strong> {{ $item['id'] }}</p>
-    <p><strong>Product:</strong> {{ $item['product'] }}</p>
-    <p><strong>Brand:</strong> {{ $item['brand'] }}</p>
-    <p><strong>Category:</strong> {{ $item['category'] }}</p>
-    <p><strong>Price:</strong> ₱{{ $item['price'] }}</p>
+            <a href="{{ route('skincare.index') }}" class="btn btn-primary">Back to Skincare List</a>
+        </div>
+    </div>
 
-    <p>Created by: Kimberly Benavidez</p>
-
-    <a href="{{ route('skincare.index') }}">Back to Skincare List</a>
-
-</body>
-</html>
+@endsection
