@@ -2,20 +2,58 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class SkincareController extends Controller
 {
     private function skincare()
     {
         return [
-            1 => ['id' => 1,'product' => 'Gentle Facial Cleanser', 'brand' => 'Celeteque','category' => 'Cleanser','price' => 299,],
-            2 => [ 'id' => 2,'product' => 'Hydrating Toner', 'brand' => 'Luxe Organix','category' => 'Toner','price' => 199,],
-            3 => ['id' => 3,'product' => 'Niacinamide Serum','brand' => 'The Ordinary','category' => 'Serum','price' => 550,],
-            4 => [ 'id' => 4,'product' => 'Sunscreen SPF 50','brand' => 'Belo','category' => 'Sunscreen','price' => 399,],
-            5 => ['id' => 5,'product' => 'Moisturizing Cream','brand' => 'QuickFX','category' => 'Moisturizer','price' => 349,],
-            6 => ['id' => 6, 'product' => 'Acne Spot Gel','brand' => 'Oxecure','category' => 'Treatment','price' => 299,],
+            1 => [
+                'id' => 1,
+                'product' => 'Gentle Facial Cleanser',
+                'brand' => 'Celeteque',
+                'category' => 'Cleanser',
+                'price' => 299,
+            ],
+            2 => [
+                'id' => 2,
+                'product' => 'Hydrating Toner',
+                'brand' => 'Luxe Organix',
+                'category' => 'Toner',
+                'price' => 199,
+            ],
+            3 => [
+                'id' => 3,
+                'product' => 'Niacinamide Serum',
+                'brand' => 'The Ordinary',
+                'category' => 'Serum',
+                'price' => 550,
+            ],
+            4 => [
+                'id' => 4,
+                'product' => 'Sunscreen SPF 50',
+                'brand' => 'Belo',
+                'category' => 'Sunscreen',
+                'price' => 399,
+            ],
+            5 => [
+                'id' => 5,
+                'product' => 'Moisturizing Cream',
+                'brand' => 'QuickFX',
+                'category' => 'Moisturizer',
+                'price' => 349,
+            ],
+            6 => [
+                'id' => 6,
+                'product' => 'Acne Spot Gel',
+                'brand' => 'Oxecure',
+                'category' => 'Treatment',
+                'price' => 299,
+            ],
         ];
     }
-    
+
     public function index()
     {
         $skincare = $this->skincare();
@@ -25,7 +63,17 @@ class SkincareController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function create()
+    {
+        //
+    }
+
+    public function store(Request $request)
+    {
+        //
+    }
+
+    public function show(string $id)
     {
         $skincare = $this->skincare();
 
@@ -38,6 +86,21 @@ class SkincareController extends Controller
         return view('skincare.show', [
             'item' => $item
         ]);
+    }
+
+    public function edit(string $id)
+    {
+        //
+    }
+
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    public function destroy(string $id)
+    {
+        //
     }
 
     public function featured()
