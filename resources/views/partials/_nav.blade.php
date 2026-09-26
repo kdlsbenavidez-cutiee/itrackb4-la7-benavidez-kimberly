@@ -1,7 +1,9 @@
 <nav>
-    <a href="{{ route('skincare.index') }}">All Products</a>
-    |
-    <a href="{{ route('skincare.featured') }}">Featured</a>
-    |
-    <a href="{{ route('skincare.filter') }}">Filter</a>
+    <a href="{{ route('skincare.index') }}"
+       class="{{ request()->is('skincare*') ? 'active' : '' }}">Skincare </a>
+
+    <a href="{{ route('skincare.featured') }}"
+    class="{{ request()->is('skincare/featured*') ? 'active' : '' }}">
+     Featured
+    </a>
 </nav>

@@ -6,6 +6,31 @@ use Illuminate\Http\Request;
 
 class SkincareController extends Controller
 {
+    public function index(Request $request)
+    {
+        $skincare = $this->skincare();
+
+        $category = $request->query('category', 'all');
+        $brand = $request->query('brand', 'all');
+
+        $filtered = [];
+
+        foreach ($skincare as $item) {
+            $categoryMatch = $category === 'all' || $item['category'] === $category;
+            $brandMatch = $brand === 'all' || $item['brand'] === $brand;
+
+            if ($categoryMatch && $brandMatch) {
+                $filtered[] = $item;
+            }
+        }
+
+        return view('skincare.index', [
+            'skincare' => $filtered,
+            'category' => $category,
+            'brand' => $brand
+        ]);
+    }
+
     private function skincare()
     {
         return [
@@ -52,15 +77,6 @@ class SkincareController extends Controller
                 'price' => 299,
             ],
         ];
-    }
-
-    public function index()
-    {
-        $skincare = $this->skincare();
-
-        return view('skincare.index', [
-            'skincare' => $skincare
-        ]);
     }
 
     public function create()
@@ -111,31 +127,6 @@ class SkincareController extends Controller
 
         return view('skincare.featured', [
             'item' => $item
-        ]);
-    }
-
-    public function filter($value = null)
-    {
-        $skincare = $this->skincare();
-
-        if ($value === null) {
-            return view('skincare.filter', [
-                'skincare' => $skincare,
-                'activeFilter' => 'All'
-            ]);
-        }
-
-        $filtered = [];
-
-        foreach ($skincare as $item) {
-            if ($item['category'] === $value) {
-                $filtered[] = $item;
-            }
-        }
-
-        return view('skincare.filter', [
-            'skincare' => $filtered,
-            'activeFilter' => $value
         ]);
     }
 }

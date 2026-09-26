@@ -1,40 +1,20 @@
-# ITRACKB4 - Laboratory Activity 3
+# ITRACKB4 LA6 - Skincare Filters
 
-## Skincare Products
+## Q1. Why is it better to use one `/students` route with query strings instead of creating a new route for every filter?
 
-This project is a simple Laravel application about skincare products.
-It has a product list, detail pages, a featured product, and a filter
-for the product categories.
+Using one route makes the code simpler because we do not need to create a separate route for every filter. The query string can change the result while still using the same list page. It also makes it easier to use two filters together.
 
-## Routes
+## Q2. If you used a route parameter for the course filter instead, what would the URL look like?
 
-- `/skincare` - shows all skincare products.
-- `/skincare/featured` - shows the featured product.
-- `/skincare/{id}` - shows the details of a product.
-- `/skincare/filter/{value}` - filters the products by category.
-- `/skincare/filter` - shows all products when there is no filter.
+If I used a route parameter for the course filter, the URL could look like `/students/BSIT`. The BSIT value becomes part of the route path. Unlike a query string, the value is used as a route parameter.
 
-## Questions
+## Q3. Which navigation case needed a pattern change, and why did the other case not need one?
 
-### 1. Why must `/skincare/featured` be placed before `/skincare/{id}`?
+The navigation link for the skincare section needed a pattern so it would stay active on the skincare list and detail pages. The other navigation case did not need the same pattern because its URL is only for one specific page. The `request()->is()` check is used to check the current path.
 
-The featured route should be placed first because Laravel checks the
-routes from top to bottom. If the `{id}` route comes first, Laravel
-might read "featured" as an ID. Putting the featured route first makes
-sure that the correct page will open.
+## Q4. Why did you delete the old filter method and Blade view but keep the empty `store()` and `update()` methods?
 
-### 2. What happens when a nonexistent ID is requested?
-
-The controller checks if the ID exists in the skincare data. If it
-does not exist, `abort(404)` is used. This will show a 404 Not Found
-page instead of an error.
-
-### 3. Why are named routes useful? What can break if we do not use them?
-
-Named routes make it easier to create links because we can use the
-route name instead of typing the URL directly. If the URL is changed
-later, hard-coded links can stop working. Using named routes makes
-the links easier to manage.
+I deleted the old filter method and Blade view because the old filter was replaced by the query string filter. I kept the empty `store()` and `update()` methods because they are still part of the resource controller structure. They are unfinished methods and were not replaced by the new filter.
 
 ## Author
 

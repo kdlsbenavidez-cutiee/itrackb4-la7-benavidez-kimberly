@@ -10,8 +10,15 @@ Route::get('/', function () {
 Route::get('/skincare/featured', [SkincareController::class, 'featured'])
     ->name('skincare.featured');
 
-Route::get('/skincare/filter/{value?}', [SkincareController::class, 'filter'])
-    ->name('skincare.filter');
+Route::get('/skincare/filter/{value?}', function ($value = null) {
+    if ($value === null) {
+        return redirect()->route('skincare.index');
+    }
+
+    return redirect()->route('skincare.index', [
+        'category' => $value
+    ]);
+})->name('skincare.filter');
 
 Route::resource('skincare', SkincareController::class)
     ->only(['index', 'show']);
