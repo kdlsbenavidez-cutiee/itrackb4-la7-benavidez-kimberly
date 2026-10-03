@@ -6,6 +6,21 @@ use Illuminate\Http\Request;
 
 class SkincareController extends Controller
 {
+    private function skincare()
+    {
+        $path = storage_path('app/skincare.json');
+
+        return json_decode(file_get_contents($path), true);
+    }
+
+    private function saveSkincare(array $skincare)
+    {
+        file_put_contents(
+            storage_path('app/skincare.json'),
+            json_encode($skincare, JSON_PRETTY_PRINT)
+        );
+    }
+
     public function index(Request $request)
     {
         $skincare = $this->skincare();
@@ -31,62 +46,38 @@ class SkincareController extends Controller
         ]);
     }
 
-    private function skincare()
-    {
-        return [
-            1 => [
-                'id' => 1,
-                'product' => 'Gentle Facial Cleanser',
-                'brand' => 'Celeteque',
-                'category' => 'Cleanser',
-                'price' => 299,
-            ],
-            2 => [
-                'id' => 2,
-                'product' => 'Hydrating Toner',
-                'brand' => 'Luxe Organix',
-                'category' => 'Toner',
-                'price' => 199,
-            ],
-            3 => [
-                'id' => 3,
-                'product' => 'Niacinamide Serum',
-                'brand' => 'The Ordinary',
-                'category' => 'Serum',
-                'price' => 550,
-            ],
-            4 => [
-                'id' => 4,
-                'product' => 'Sunscreen SPF 50',
-                'brand' => 'Belo',
-                'category' => 'Sunscreen',
-                'price' => 399,
-            ],
-            5 => [
-                'id' => 5,
-                'product' => 'Moisturizing Cream',
-                'brand' => 'QuickFX',
-                'category' => 'Moisturizer',
-                'price' => 349,
-            ],
-            6 => [
-                'id' => 6,
-                'product' => 'Acne Spot Gel',
-                'brand' => 'Oxecure',
-                'category' => 'Treatment',
-                'price' => 299,
-            ],
-        ];
-    }
-
     public function create()
     {
-        //
+        return view('skincare.create');
     }
 
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'product' => 'required|max:255',
+            'brand' => 'required|max:255',
+            'category' => 'required|in:Cleanser,Toner,Serum,Sunscreen,Moisturizer,Treatment',
+            'price' => 'required|numeric|min:1'
+        ]);
+
+        $skincare = $this->skincare();
+
+        $id = 1;
+
+        foreach ($skincare as $item) {
+            if ($item['id'] >= $id) {
+                $id = $item['id'] + 1;
+            }
+        }
+
+        $data['id'] = $id;
+
+        $skincare[$id] = $data;
+
+        $this->saveSkincare($skincare);
+
+        return redirect()->route('skincare.index')
+            ->with('success', 'Skincare product added successfully.');
     }
 
     public function show(string $id)

@@ -21,4 +21,4 @@ Route::get('/skincare/filter/{value?}', function ($value = null) {
 })->name('skincare.filter');
 
 Route::resource('skincare', SkincareController::class)
-    ->only(['index', 'show']);
+    ->only(['index', 'create', 'store', 'show']);

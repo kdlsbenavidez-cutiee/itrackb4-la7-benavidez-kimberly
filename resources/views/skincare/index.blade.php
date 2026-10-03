@@ -5,9 +5,15 @@
     <h2>Skincare Products</h2>
 
     <p>
+        <a href="{{ route('skincare.create') }}" class="btn btn-primary">
+            Add Skincare Product
+        </a>
+    </p>
+
+    <p>
         <strong>Category Filter:</strong>
-        <a href="{{ route('skincare.index', ['category' => 'Cleanser', 'brand' => $brand]) }}"> Cleanser</a>
-        <a href="{{ route('skincare.index', ['category' => 'Toner', 'brand' => $brand]) }}">Toner </a>
+        <a href="{{ route('skincare.index', ['category' => 'Cleanser', 'brand' => $brand]) }}">Cleanser</a>
+        <a href="{{ route('skincare.index', ['category' => 'Toner', 'brand' => $brand]) }}">Toner</a>
         <a href="{{ route('skincare.index', ['category' => 'Serum', 'brand' => $brand]) }}">Serum</a>
         <a href="{{ route('skincare.index', ['category' => 'Sunscreen', 'brand' => $brand]) }}">Sunscreen</a>
         <a href="{{ route('skincare.index', ['category' => 'Moisturizer', 'brand' => $brand]) }}">Moisturizer</a>
