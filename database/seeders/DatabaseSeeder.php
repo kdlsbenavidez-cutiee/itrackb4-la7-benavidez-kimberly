@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Skincare;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,9 +15,12 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        Skincare::create([
+            'product' => 'Gentle Facial Cleanser',
+            'brand' => 'Celeteque',
+            'category' => 'Cleanser',
+            'price' => 299 ]);    
+            
+            $this->call([SkincareSeeder::class]);
     }
 }

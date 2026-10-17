@@ -2,48 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Skincare;
 use Illuminate\Http\Request;
 
 class SkincareController extends Controller
 {
-    private function skincare()
-    {
-        $path = storage_path('app/skincare.json');
-
-        return json_decode(file_get_contents($path), true);
-    }
-
-    private function saveSkincare(array $skincare)
-    {
-        file_put_contents(
-            storage_path('app/skincare.json'),
-            json_encode($skincare, JSON_PRETTY_PRINT)
-        );
-    }
-
     public function index(Request $request)
     {
-        $skincare = $this->skincare();
+        $skincare = Skincare::all();
+        $category = $request->query('category');
+        $brand = $request->query('brand');
 
-        $category = $request->query('category', 'all');
-        $brand = $request->query('brand', 'all');
-
-        $filtered = [];
-
-        foreach ($skincare as $item) {
-            $categoryMatch = $category === 'all' || $item['category'] === $category;
-            $brandMatch = $brand === 'all' || $item['brand'] === $brand;
-
-            if ($categoryMatch && $brandMatch) {
-                $filtered[] = $item;
-            }
-        }
-
-        return view('skincare.index', [
-            'skincare' => $filtered,
-            'category' => $category,
-            'brand' => $brand
-        ]);
+        return view('skincare.index', compact('skincare', 'category', 'brand'));
     }
 
     public function create()
@@ -60,21 +30,7 @@ class SkincareController extends Controller
             'price' => 'required|numeric|min:1'
         ]);
 
-        $skincare = $this->skincare();
-
-        $id = 1;
-
-        foreach ($skincare as $item) {
-            if ($item['id'] >= $id) {
-                $id = $item['id'] + 1;
-            }
-        }
-
-        $data['id'] = $id;
-
-        $skincare[$id] = $data;
-
-        $this->saveSkincare($skincare);
+        Skincare::create($data);
 
         return redirect()->route('skincare.index')
             ->with('success', 'Skincare product added successfully.');
@@ -82,42 +38,16 @@ class SkincareController extends Controller
 
     public function show(string $id)
     {
-        $skincare = $this->skincare();
+        $skincare = Skincare::findOrFail($id);
 
-        if (!isset($skincare[$id])) {
-            abort(404);
-        }
+         return view('skincare.show', ['item' => $skincare]);
 
-        $item = $skincare[$id];
-
-        return view('skincare.show', [
-            'item' => $item
-        ]);
-    }
-
-    public function edit(string $id)
-    {
-        //
-    }
-
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    public function destroy(string $id)
-    {
-        //
     }
 
     public function featured()
     {
-        $skincare = $this->skincare();
+        $item = Skincare::findOrFail(3);
 
-        $item = $skincare[3];
-
-        return view('skincare.featured', [
-            'item' => $item
-        ]);
+        return view('skincare.featured', ['item' => $item]);
     }
 }

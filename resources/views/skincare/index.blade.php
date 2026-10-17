@@ -49,8 +49,8 @@
         </tr>
 
         @forelse ($skincare as $item)
-            <tr class="@if($item['price'] >= 400) table-warning @endif">
-                <td>{{ $loop->iteration }}</td>
+            <tr>
+                <td>{{ $item['id'] }}</td>
                 <td>
                     <a href="{{ route('skincare.show', $item['id']) }}">
                         {{ $item['product'] }}
